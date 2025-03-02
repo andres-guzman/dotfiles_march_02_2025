@@ -168,7 +168,7 @@ starship|fish                                          # customizable shell prom
 fastfetch                                              # system information fetch tool
 
 # --------------------------------------------------- // HyDE
-# hyde-cli-git                                           # cli tool to manage hyde \\ Deprecated for HyDE
+hyde-cli-git                                           # cli tool to manage hyde \\ Deprecated for HyDE
 hypridle                                               # idle daemon
 
 
