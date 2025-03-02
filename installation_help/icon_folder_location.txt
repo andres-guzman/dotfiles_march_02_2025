@@ -1,0 +1,4 @@
+Icon pakcages are in:
+/mnt/Backup/dotfiles_backup/local_new/shared/icons/
+
+Install monokai and oher in packages after Arch installation

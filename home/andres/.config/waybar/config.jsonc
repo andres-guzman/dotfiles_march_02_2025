@@ -1,0 +1,426 @@
+[
+  {
+    // Monitor 1
+    "name": "waybar-1",
+    "output": "DP-1",
+    "layer": "top",
+    "position": "top",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "reload_style_on_change": true,
+    "modules-left": ["custom/weather"],
+    "modules-center": ["hyprland/workspaces#DP-1"],
+    "modules-right": [
+      "custom/cava",
+      "custom/padd-space",
+      "network",
+      "custom/padd",
+      "pulseaudio",
+      "custom/padd-module",
+      "pulseaudio#microphone",
+      "custom/padd",
+      "idle_inhibitor",
+      "custom/padd",
+      "custom/power"
+    ],
+    // Modules for Monitor 1
+    // Workspaces
+    "hyprland/workspaces#DP-1": {
+      "all-outputs": false,
+      "active-only": false,
+      "format": "{icon}",
+      "show-special": false,
+      "on-click": "hyprctl dispatch workspace {id},DP-1",
+      // "on-click": "hyprctl dispatch focusworkspace {id}",
+      "disable-scroll": true,
+      "rotate": 0,
+      "persistent-workspaces": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": [],
+        "7": [],
+        "8": [],
+        "9": [],
+        "10": []
+      },
+      "format-icons": {
+        "1": "One",
+        "2": "Two",
+        "3": "Three",
+        "4": "Four",
+        "5": "Five",
+        "6": "Six",
+        "7": "Seven",
+        "8": "Eight",
+        "9": "Nine",
+        "10": "Ten"
+      }
+    },
+
+    // Custom modules
+    "custom/weather": {
+      "exec": "weather_timezone.py",
+      "format": "{}",
+      "tooltip": true,
+      "return-type": "json",
+      "interval": 60,
+      "on-click": "weather_timezone.py next",
+      "on-click-right": "xdg-open https://openweathermap.org/city/3911925"
+    },
+
+    // "custom/cava": {
+    //   // "format": "{}",
+    //   "interval": 999999,
+    //   "format": "Checking PATH",
+    //   "exec": "echo $PATH > /tmp/waybar-path.log"
+    //   // "exec": " >> /tmp/waybar-script.log 2>&1",
+    //   // "framerate": 60,
+    //   // "bars": 64,
+    //   // "hide_on_silence": true,
+    //   // "hide-empty": true
+    // },
+
+    "network": {
+      "tooltip": true,
+      "rotate": 0,
+      "format-alt": "󰈀 Ethernet",
+      "format-linked": "󰈀 {ifname} (No IP)",
+      "format-wifi": "  {essid} <span color='#7654FF'>Download</span> {bandwidthDownBytes}  <span color='#7654FF'>Upload</span> {bandwidthUpBytes}",
+      "format-ethernet": "<span color='#8C70FA'>Down</span> {bandwidthDownBytes} <span color='#8C70FA'>Up</span> {bandwidthUpBytes}",
+      "tooltip-format-wifi": "<b>Wifi Name:</b> {essid}\n<b>IP Address:</b> {ipaddr} / {cidr}\n<b>Signal strength:</b> {signaldBm}dBm ({signalStrength}%)\n<b>Frequency: </b>{frequency}MHz\nInterface: <b>{ifname}</b>\n<b>Gateway: </b>{gwaddr}\n<b>Netmask: </b>{netmask}",
+      "tooltip-format-ethernet": "<b>IP Address:</b> {ipaddr} / {cidr}\n<b>Interface:</b> {ifname}\n<b>Gateway:</b> {gwaddr}\n<b>Netmask:</b> {netmask}",
+      "format-disconnected": "Network Disconnected",
+      "tooltip-format-disconnected": "󰖪  No Internet Connection",
+      "interval": 2,
+      "max-length": 350
+    },
+    // "pulseaudio": {
+    //   "format": "Volume {volume}%",
+    //   "rotate": 0,
+    //   "format-muted": "Volume Muted",
+    //   "on-click": "volumecontrol.sh -o m",
+    //   "on-click-right": "volumecontrol.sh -s ''",
+    //   "on-scroll-up": "volumecontrol.sh -o i 1",
+    //   "on-scroll-down": "volumecontrol.sh -o d 1",
+    //   "tooltip-format": "{icon} {desc}",
+    //   "scroll-step": 1,
+    //   "format-icons": {
+    //     "headphone": "",
+    //     "hands-free": "",
+    //     "headset": "",
+    //     "phone": "",
+    //     "portable": "",
+    //     "car": "",
+    //     "default": [
+    //       "",
+    //       "",
+    //       ""
+    //     ]
+    //   }
+    // },
+    // "pulseaudio#microphone": {
+    //   "format": "{format_source}",
+    //   "rotate": 0,
+    //   "format-source": "Mic {volume}%",
+    //   "format-source-muted": "Mic Muted",
+    //   "on-click": "volumecontrol.sh -i m",
+    //   "on-click-middle": "pavucontrol -t 4",
+    //   "on-scroll-up": "volumecontrol.sh -i i",
+    //   "on-scroll-down": "volumecontrol.sh -i d",
+    //   "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
+    //   "scroll-step": 1
+    // },
+
+    "pulseaudio": {
+      "format": "Volume {volume}%",
+      "rotate": 0,
+      "format-muted": "Volume Muted",
+      "on-click": "volumecontrol.sh -o m",
+      "on-click-right": "volumecontrol.sh -s ''",
+      "on-scroll-up": "volumecontrol.sh -o i 1",
+      "on-scroll-down": "volumecontrol.sh -o d 1",
+      "tooltip-format": "{icon} {desc}",
+      "scroll-step": 1,
+      "format-icons": {
+        "headphone": "",
+        "hands-free": "",
+        "headset": "",
+        "phone": "",
+        "portable": "",
+        "car": "",
+        "default": ["", "", ""]
+      }
+    },
+
+    "pulseaudio#microphone": {
+      "format": "{format_source}",
+      "rotate": 0,
+      "format-source": "Mic {volume}%",
+      "format-source-muted": "Mic Muted",
+      "on-click": "volumecontrol.sh -i m",
+      "on-click-middle": "pavucontrol -t 4",
+      "on-scroll-up": "volumecontrol.sh -i i 1",
+      "on-scroll-down": "volumecontrol.sh -i d 1",
+      "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
+      "scroll-step": 1
+    },
+
+    // "custom/power": {
+    //   "format": "",
+    //   "rotate": 0,
+    //   "exec": "echo ; echo Shutdown system",
+    //   "on-click": "logoutlaunch.sh 2",
+    //   "on-click-right": "logoutlaunch.sh 1",
+    //   "interval": 86400, // once every day
+    //   "tooltip": true
+    // },
+
+    "idle_inhibitor": {
+      "format": "{icon}",
+      "format-icons": {
+        "activated": "",
+        "deactivated": ""
+      }
+    },
+
+    "custom/power": {
+      "format": "⏼",
+      "tooltip": false,
+      "on-click": "wlogout"
+    },
+
+    // Custom padding modules
+    "custom/padd": {
+      "format": "|",
+      "interval": "once",
+      "tooltip": false
+    },
+
+    "custom/padd-module": {
+      "format": "-",
+      "interval": "once",
+      "tooltip": false
+    },
+
+    "custom/padd-space": {
+      "format": " ",
+      "interval": "once",
+      "tooltip": false
+    }
+  },
+  {
+    // Monitor 2
+    "name": "waybar-2",
+    "output": "DP-2",
+    "layer": "top",
+    "position": "top",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "reload_style_on_change": true,
+    "modules-left": ["custom/notifications", "custom/updates", "mpris"],
+    "modules-right": ["cpu", "custom/padd", "memory"],
+    "font": "JetBrainsMono Nerd Font, Font Awesome, TTF",
+    // Modules for Monitor 2
+    // "custom/notifications": {
+    //   "format": "No Notifications", // TODO: workaround for the module not showing up // revert when fixed
+    //   "rotate": 0,
+    //   "format-icons": {
+    //     "email-notification": "<span><sup>*</sup></span>",
+    //     "chat-notification": "󱋊<span><sup>*</sup></span>",
+    //     "warning-notification": "󱨪<span foreground='yellow'><sup>*</sup></span>",
+    //     "error-notification": "󱨪<span foreground='red'><sup>*</sup></span>",
+    //     "network-notification": "󱂇<span><sup>*</sup></span>",
+    //     "battery-notification": "󰁺<span><sup>*</sup></span>",
+    //     "update-notification": "󰚰<span><sup>*</sup></span>",
+    //     "music-notification": "󰝚<span><sup>*</sup></span>",
+    //     "volume-notification": "󰕿<span><sup>*</sup></span>",
+    //     "notification": "<big><span><sup>*</sup></span></big>",
+    //     "dnd": "<big></big>",
+    //     "none": "<big></big>"
+    //   },
+    //   "return-type": "json",
+    //   "exec-if": "which dunstctl",
+    //   "exec": "notifications.py",
+    //   "on-scroll-down": "sleep 0.1 && dunstctl history-pop",
+    //   "on-click-right": "dunstctl history-clear",
+    //   "interval": 1,
+    //   "tooltip": true,
+    //   "escape": true
+    // },
+    // "custom/updates": {
+    //   "exec": "systemupdate.sh",
+    //   "return-type": "json",
+    //   "format": "{}",
+    //   "rotate": 0,
+    //   "interval": 86400,
+    //   "tooltip": true,
+    //   "signal": 20,
+    //   "class": {
+    //     "updates-available": {
+    //       "on-click": "systemupdate.sh up"
+    //     },
+    //     "no-updates": {
+    //       "on-click": ""
+    //     }
+    //   }
+    // },
+    // "custom/updates": {
+    //   "exec": "systemupdate.sh",
+    //   "return-type": "json",
+    //   "format": "{}",
+    //   "rotate": 0,
+    //   "interval": 86400,
+    //   "tooltip": true,
+    //   "signal": 20,
+    //   "on-click": "systemupdate.sh up"
+    // },
+    // "custom/updates": {
+    //   "exec": "systemupdate.sh",
+    //   "return-type": "json",
+    //   "format": "{}",
+    //   "interval": 86400,
+    //   "tooltip": true,
+    //   "signal": 20,
+    //   "on-click": "systemupdate.sh up",
+    //   "on-update": "echo '{\"text\":\"Updating...\"}'"
+    // },
+    // "custom/updates": {
+    //   "exec": "echo '{\"text\":\" Updating...\"}'",
+    //   "return-type": "json",
+    //   "format": "{}",
+    //   "interval": 86400,
+    //   "tooltip": true,
+    //   "signal": 20,
+    //   "on-click": "systemupdate.sh up",
+    //   "on-update": "echo '{\"text\":\" Updating...\"}'"
+    // },
+    // "custom/updates": {
+    //   "exec": "echo '{\"text\":\" Updates available\"}'",
+    //   "return-type": "json",
+    //   "format": "{}",
+    //   "interval": 86400,
+    //   "tooltip": true,
+    //   "signal": 20,
+    //   "on-click": "systemupdate.sh up",
+    //   "on-update": "while :; do for spinner in '' '' '' '' '⟳'; do echo '{\"text\":\"'$spinner' Updating...\"}'; sleep 0.5; done; done"
+    // },
+    // "custom/updates": {
+    //   "exec": "echo 'Test updates'",
+    //   "format": "{}",
+    //   "on-click": "notify-send 'Clicked!'"
+    // },
+    // "custom/updates": {
+    //     "exec": "systemupdate.sh",
+    //     "return-type": "json",
+    //     "format": "{text}",
+    //     "interval": 30,
+    //     "tooltip": true,
+    //     "signal": 20,
+    //     "on-click": "systemupdate.sh up"
+    // },
+
+    // "custom/updates": {
+    //     "exec": "systemupdate.sh",
+    //     "return-type": "json",
+    //     "format": "{}",
+    //     "interval": 86400,
+    //     "tooltip": true,
+    //     "signal": 20,
+    //     "on-click": "systemupdate.sh up",
+    //     "on-update": "echo '{\"text\":\"Updating...\"}'"
+    // },
+
+    // works:
+    //     "custom/updates": {
+    //     "exec": "systemupdate.sh",
+    //     "return-type": "json",
+    //     "format": "{}",
+    //     "interval": 86400,
+    //     "tooltip": true,
+    //     "signal": 20,
+    //     "on-click": "systemupdate.sh up",
+    //     "on-update": "echo '{\"text\":\"Updating...\"}'"
+    // },
+
+    // "custom/updates": {
+    //   "exec": "systemupdate.sh",
+    //   "return-type": "json",
+    //   "format": "{}",
+    //   "interval": 86400,
+    //   "tooltip": true,
+    //   "signal": 20,
+    //   "on-click": "systemupdate.sh up",
+    //   "on-update": "echo '{\"text\":\"Updating...\"}'"
+    // },
+
+    "custom/updates": {
+      "exec": "systemupdate.sh",
+      "return-type": "json",
+      "format": "{}",
+      "interval": 86400,
+      "tooltip": true,
+      "signal": 20,
+      "on-click": "systemupdate.sh up",
+      "on-update": "systemupdate.sh" // Trigger script every time the update signal is received
+    },
+
+    "mpris": {
+      "format": "<span color='#dce0e8'> |</span> <span color='#8C70FA'>▶</span> {dynamic} ",
+      "rotate": 0,
+      "format-paused": "<span color='#dce0e8'> |</span> <span color='#8C70FA'></span> {dynamic} ",
+      "player-icons": {
+        "default": "▶",
+        "mpv": "MPV!"
+      },
+      "status-icons": {
+        "paused": ""
+      },
+      "max-length": 1000,
+      "interval": 1
+    },
+
+    "cpu": {
+      "interval": 5,
+      "format": "CPU: {usage}%",
+      "rotate": 0,
+      "format-alt": "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}",
+      "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
+    },
+
+    "memory": {
+      "states": {
+        "c": 90, // critical
+        "h": 60, // high
+        "m": 30 // medium
+      },
+      "interval": 30,
+      "format": "RAM: {used}GB",
+      "rotate": 0,
+      "format-m": "RAM: {used}GB",
+      "format-h": "RAM: {used}GB",
+      "format-c": " RAM: {used}GB",
+      "format-alt": "RAM USAGE {percentage}%",
+      "max-length": 20,
+      "tooltip": true,
+      "tooltip-format": "Usage: {used:0.1f}GB of {total:0.1f}GB\nPercentage: {percentage}%"
+    },
+
+    // Custom padding modules
+    "custom/padd": {
+      "format": "|",
+      "interval": "once",
+      "tooltip": false
+    },
+
+    "custom/padd-module": {
+      "format": "-",
+      "interval": "once",
+      "tooltip": false
+    }
+  }
+]

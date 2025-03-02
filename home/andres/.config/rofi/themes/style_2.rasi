@@ -1,0 +1,139 @@
+// Config //
+
+@theme "~/.config/rofi/colors/colors_1.rasi"
+
+configuration {
+    // modi:                        "drun,filebrowser,window,run";
+    modi:                        "drun";
+    show-icons:                  true;
+    display-drun:                " ";
+    display-run:                 " ";
+    display-filebrowser:         " ";
+    display-window:              " ";
+    drun-display-format:         "{name}";
+    window-format:               "{w}{t}";
+    font:                        "JetBrainsMono Nerd Font 9";
+    icon-theme:                  "Tela-circle-dracula";
+}
+
+
+// Main //
+window {
+    height:                      37 em;
+    width:                       75em;
+    transparency:                "real";
+    fullscreen:                  false;
+    enabled:                     true;
+    cursor:                      "default";
+    spacing:                     0em;
+    padding:                     0em;
+    border-color:                @main-br;
+    background-color:            @main-bg;
+    border-radius:               0.85em;
+}
+
+// Mainbox //
+mainbox {
+    enabled:                     true;
+    spacing:                     0em;
+    padding:                     0em;
+    orientation:                 vertical;
+    children:                    [ "inputbar" , "listbox" ];
+    background-color:            transparent;
+    background-image:            url("/mnt/Documents/PC_Pictures/Walls/Raycast_heic_to_png/cleaned_pngs/Raycast_cube_prod.png", height);
+}
+
+
+// Inputs //
+inputbar {
+    enabled:                     true;
+    spacing:                     0em;
+    padding:                     20px;
+    children:                    [ "entry" ];
+    background-color:            @main-bg;
+}
+
+// Entry //
+entry {
+    border-radius:               0.5em;
+    enabled:                     true;
+    spacing:                     1em;
+    padding:                     0.85em;
+    text-color:                  @main-fg;
+    background-color:          #181825;
+    cursor:                      text;
+}
+
+// Lists //
+listbox {
+    padding:                     0em;
+    spacing:                     0em;
+    orientation:                 horizontal;
+    children:                    [ "listview" ];
+    background-color:            @main-bg;
+}
+
+// List view //
+listview {
+    padding:                     2.5em;
+    spacing:                     0.5em;
+    enabled:                     true;
+    columns:                     4;
+    lines:                       4;
+    cycle:                       false;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    cursor:                      "default";
+    background-color:            transparent;
+    text-color:                  @main-fg;
+}
+
+// Elements //
+element {
+    enabled:                     true;
+    spacing:                     0.5em;
+    padding:                     0.5em;
+    cursor:                      pointer;
+    background-color:            transparent;
+    text-color:                  @main-fg;
+    border-radius:               0.47em;
+}
+
+element selected.normal {
+    background-color:            @select-bg;
+    text-color:                  @select-fg;
+}
+
+element-icon {
+    size:                        1.4em;
+    cursor:                      inherit;
+    background-color:            transparent;
+    text-color:                  inherit;
+}
+
+element-text {
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+    cursor:                      inherit;
+    background-color:            transparent;
+    text-color:                  inherit;
+}
+
+// Error message //
+error-message {
+    text-color:                  @main-fg;
+    background-color:            @main-bg;
+    text-transform:              capitalize;
+    children:                    [ "textbox" ];
+}
+
+textbox {
+    text-color:                  inherit;
+    background-color:            inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+}

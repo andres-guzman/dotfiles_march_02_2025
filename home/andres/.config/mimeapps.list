@@ -1,0 +1,21 @@
+[Added Associations]
+application/json=vscodium-wayland.desktop;
+image/jpeg=org.gnome.eog.desktop;
+text/plain=vscodium-wayland.desktop;
+video/x-matroska=mpv-2.desktop;
+
+[Default Applications]
+application/json=vscodium-wayland.desktop
+application/x-extension-htm=zen.desktop
+application/x-extension-html=zen.desktop
+application/x-extension-shtml=zen.desktop
+application/x-extension-xht=zen.desktop
+application/x-extension-xhtml=zen.desktop
+application/xhtml+xml=zen.desktop
+image/jpeg=org.gnome.eog.desktop
+text/html=zen.desktop
+text/plain=vscodium-wayland.desktop
+video/x-matroska=mpv-2.desktop;
+x-scheme-handler/chrome=zen.desktop
+x-scheme-handler/http=zen.desktop
+x-scheme-handler/https=zen.desktop

@@ -1,0 +1,782 @@
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+ARCH LINUX INSTALLATION:
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+Set the console keyboard layout and font:
+$ localectl list-keymaps # list available keyboard layouts. # optional, can be done via arch installer
+$ loadkeys la-latin1 # optional, can be done via arch installer
+$ setfont ter-132b # to use one of the largest fonts suitable for HiDPI screens
+$ setfont ter-16b # to use one of the largest fonts suitable for HiDPI screens
+
+Sizes: 6x12, 8x14, 8x16, 10x18, 10x20, 11x22, 12x24, 14x28 and 16x32.
+Weights: normal and bold (except for 6x12), plus CRT VGA-bold for 8x14 and 8x16.
+
+Disk formatting:
+$ lsblk
+$ gdisk /dev/nvme0n1
+$ x # expert mode
+$ z # delete partition
+$ lsblk # to confirm disk formatting
+
+$ pacman -Sy archinstall  # (run only if the ISO is a few weeks old)
+$ archinstall
+
+====== Packages to install ======
+
+git
+nano
+wget
+
+====== If installing Hyprland using HyDE ======
+
+# Extract USB and shutdown the system
+$ shudtdown now
+
+In the next boot, install Hyprland using HyDE
+
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+HyDE HYPRLAND INSTALLATION
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+# Update the System (optional)
+# Before installing anything, let's make sure your system is up to date:
+$ sudo pacman -Syu
+
+pacman -S --needed git base-devel
+$ git clone --depth 1 https://github.com/HyDE-Project/HyDE ~/HyDE
+$ cd ~/HyDE/Scripts
+$ ./install.sh
+
+# You can also add any other apps you wish to install alongside HyDE to Scripts/pkg_user.lst and pass the file as a parameter to install it like so:
+$ ./install.sh pkg_user.lst
+
+Refer your list from Scripts/pkg_extra.lst or you can cp  Scripts/pkg_extra.lst Scripts/pkg_user.lst if you wish to install all extra packages.
+
+Please reboot after the install script completes and takes you to the SDDM login screen (or black screen) for the first time.
+For more details, please refer to the installation wiki.
+
+To update HyDE, you will need to pull the latest changes from GitHub and restore the configs by running the following commands:
+$ cd ~/HyDE/Scripts
+$ git pull origin master
+$ ./install.sh -r
+
+Please note that any configurations you made will be overwritten if listed to be done so as listed by Scripts/restore_cfg.psv.
+However, all replaced configs are backed up and may be recovered from in ~/.config/cfg_backups.
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+PACKAGES, TOOLS AND APPLICATIONS (HyDE pacakges list)
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+****** If installing Hyprland using HyDE Project, modify the package list ******
+
+====== pkg_core.lst ======
+
+# --------------------------------------------------- // System
+pipewire                                               # audio/video server
+pipewire-alsa                                          # pipewire alsa client
+pipewire-audio                                         # pipewire audio client
+pipewire-jack                                          # pipewire jack client
+pipewire-pulse                                         # pipewire pulseaudio client
+gst-plugin-pipewire                                    # pipewire gstreamer client
+wireplumber                                            # pipewire session manager
+pavucontrol                                            # pulseaudio volume control
+pamixer                                                # pulseaudio cli mixer
+networkmanager                                         # network manager
+network-manager-applet                                 # network manager system tray utility
+bluez                                                  # bluetooth protocol stack
+bluez-utils                                            # bluetooth utility cli
+blueman                                                # bluetooth manager gui
+# brightnessctl                                          # screen brightness control
+udiskie                                                # manage removable media
+
+# --------------------------------------------------- // Display Manager
+# sddm                                                   # display manager for KDE plasma
+# qt5-quickcontrols                                      # for sddm theme ui elements
+# qt5-quickcontrols2                                     # for sddm theme ui elements
+# qt5-graphicaleffects                                   # for sddm theme effects
+
+# --------------------------------------------------- // Window Manager
+hyprland                                               # wlroots-based wayland compositor
+dunst                                                  # notification daemon
+rofi-wayland                                           # application launcher
+waybar                                                 # system bar
+swww                                                   # wallpaper
+hyprlock                                               # lock screen
+wlogout                                                # logout menu
+# grimblast-git                                        # screenshot tool # DEPRECATED! We will ship our own version to avoid breaking changes
+grim                                                   # screenshot tool
+hyprpicker                                             # color picker
+slurp                                                  # region select for screenshot/screenshare
+satty                                                  # Modern Screenshot Annotation
+cliphist                                               # clipboard manager
+hyprsunset                                             # blue light filter
+
+# --------------------------------------------------- // Dependencies
+polkit-gnome                                           # authentication agent
+xdg-desktop-portal-hyprland                            # xdg desktop portal for hyprland
+pacman-contrib                                         # for system update check
+python-pyamdgpuinfo                                    # for amd gpu info
+parallel                                               # for parallel processing
+jq                                                     # for json processing
+imagemagick                                            # for image processing
+qt5-imageformats                                       # for dolphin image thumbnails
+qt6-imageformats
+ffmpegthumbs                                           # for dolphin video thumbnails
+kde-cli-tools                                          # for dolphin file type defaults
+libnotify                                              # for notifications
+noto-fonts-emoji                                       # emoji font
+
+# --------------------------------------------------- // Theming
+nwg-look                                               # gtk configuration tool
+qt5ct                                                  # qt5 configuration tool
+qt6ct                                                  # qt6 configuration tool
+kvantum                                                # svg based qt6 theme engine
+kvantum-qt5                                            # svg based qt5 theme engine
+qt5-wayland                                            # wayland support in qt5
+qt6-wayland                                            # wayland support in qt6
+
+# --------------------------------------------------- // Applications
+# firefox                                                # browser
+kitty                                                  # terminal
+dolphin                                                # kde file manager
+ark                                                    # kde file archiver
+unzip                                                  # extracting zip files
+# vim                                                    # terminal text editor
+# code                                                   # ide text editor
+nwg-displays                                           # monitor management utility
+
+# --------------------------------------------------- // Shell
+eza|zsh                                                # file lister for zsh
+oh-my-zsh-git|zsh                                    #  plugin manager for zsh (Optional) // Moved to pkg_extra.lst
+zsh-theme-powerlevel10k-git|zsh                        # theme for zsh
+pokego-bin|zsh                                        # display pokemon sprites in terminal (written GO)
+eza|fish                                               # file lister for fish
+starship|fish                                          # customizable shell prompt
+fastfetch                                              # system information fetch tool
+
+# --------------------------------------------------- // HyDE
+# hyde-cli-git                                           # cli tool to manage hyde \\ Deprecated for HyDE
+hypridle                                               # idle daemon
+
+
+
+
+====== pkg_extra.lst ======
+
+# --------------------------------------------------- // System
+downgrade                                            # downgrade packages
+trash-cli-git                                        # cli to manage trash files
+# libinput-gestures                                    # actions touchpad gestures using libinput
+# gestures                                             # gui for libinput-gestures
+# wttrbar                                                # for weather
+# python-requests|wttrbar                                # script dependency
+# ddcui                                                  # GUI to control brightness for external monitors
+# hyprgui-bin                                          # GUI for hyprland configuration // might mess your userprefs but convenient // Just disappeared
+# swappy                                               # screenshot editor, DEPRECATED in favor for satty
+
+# --------------------------------------------------- // Shell
+# oh-my-zsh-git|zsh                                      # Optional plugin manager for zsh // already installed locally
+
+# --------------------------------------------------- // Misc
+xdg-desktop-portal-gtk                                 # xdg desktop portal using gtk
+emote                                                # emoji picker gtk3
+
+# --------------------------------------------------- // Gaming
+steam                                                  # gaming platform
+gamemode                                               # daemon and library for game optimizations
+mangohud                                               # system performance overlay
+gamescope                                            # micro-compositor for gaming
+lutris                                               # Lutris is an open source gaming platform for Linux
+
+# --------------------------------------------------- // Music
+cava                                                   # audio visualizer
+spotify                                                # proprietary music streaming service
+spicetify-cli                                          # cli to customize spotify client
+
+# --------------------------------------------------- // Apps
+neovim                                               # vim based text editor
+
+# --------------------------------------------------- // Shell
+# oh-my-zsh-git|zsh                                      # Optional plugin manager for zsh
+pokemon-colorscripts-git|zsh                           # display pokemon sprites (optional)
+
+# --------------------------------------------------- // Editor
+vscodium                                              # Full oss text editor
+vscodium-marketplace|vscodium                         # VSCodium marketplace
+# code-marketplace|code                                 # Code-Oss marketplace
+# visual-studio-code-bin                                # MS  text editor
+
+# --------------------------------------------------- // Backends
+#electron                                              # electron backend
+
+# --------------------------------------------------- // Lockscreen
+swaylock-effects-git                                   # swaylock with effects // very minimal lockscreen
+
+# --------------------------------------------------- // OSD
+swayosd-git                                             #A GTK based on screen display for keyboard shortcuts like caps-lock and volume
+
+====== Add the following pacakges to pkg_extra.lst ======
+
+ufw
+smartmontools
+ffmpeg4.4
+gnome-text-editor
+mpv
+mpv-mpris
+konsole
+kompare
+obsidian
+htop
+kdegraphics-thumbnailers
+kimageformats
+libheif
+hexchat
+amule
+nicotine+
+qbittorrent
+filezilla
+perl-image-exiftool
+python-pipx
+python-pycountry
+python-pytz
+python-requests
+qalculate-gtk
+yt-dlp
+firefox-developer-edition
+easyeffects
+calf # easyeffects pluggins
+nerd-fonts
+noto-fonts
+noto-fonts-extra
+noto-fonts-cjk
+otf-libertinus
+
+# Yay packages
+
+thunderbird-beta-bin
+materialgram-bin
+hyprsysteminfo
+raw-thumbnailer
+vesktop
+
+Please reboot after the install script completes and takes you to the SDDM login screen (or black screen) for the first time.
+For more details, please refer to the installation wiki.
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+POST INSTALLATION SETTINGS:
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+====== MOUNTING DRIVES ======
+
+# Enter this in the terminla to create mounting points:
+sudo mkdir -p /mnt/Documents
+sudo mkdir -p /mnt/Videos
+sudo mkdir -p /mnt/Backup
+
+# list info about devices (UUID)
+$ lsblk -fs
+
+Edit fstab file
+$ sudo nano /etc/fstab
+
+Add the following lines (with udpated UUDIs):
+
+# mounting drives
+UUID="6996413b-b2a1-4508-bd3b-5ddae55e20e9" /mnt/Documents ext4 defaults,nodev,nosuid,noexec,nofail,x-gvfs-show,user 0 0
+UUID="9dbb7338-a7c3-4d50-af59-bdd685c0ca65" /mnt/Videos ext4 defaults,nodev,nosuid,noexec,nofail,x-gvfs-show,user 0 0
+UUID="6de4230d-b18c-4661-a710-70d2c5add00f" /mnt/Backup ext4 defaults,nodev,nosuid,noexec,nofail,x-gvfs-show,user 0 0
+
+Save and exit
+
+# mount all drives
+$ sudo mount -a
+
+# Verify the Mounts
+# You can verify that the drives have been mounted correctly by using the df -h command:
+
+$ df -h
+
+# Optional:
+# To make sure the drives are mounted as expected, you can reboot your system or manually mount the drives:
+sudo mount /mnt/Documents
+sudo mount /mnt/Videos
+sudo mount /mnt/Backup
+
+====== CHANGE ZSH TO BE DEFAULT SHELL ======
+
+# Make Zsh the default shell
+$ chsh -s /usr/bin/zsh
+
+Note: You may need to log out and log back in for the change to take effect. If you're using a terminal session, simply closing it and reopening it should work.
+
+# Verify the change:
+$ echo $SHEL
+
+It should return /usr/bin/zsh if everything was set up correctly.
+
+====== ISNTALL UWSM ======
+
+$ sudo pacman -S uwsm
+
+====== ARCH LINUX AUTO LOGIN ======
+
+# Edit this file:
+$ sudo nano /etc/systemd/system/getty@tty1.service.d/override.conf
+
+Add these lines:
+
+[Service]
+ExecStart=
+ExecStart=-/usr/bin/agetty --autologin andres --noclear %I $TERM
+
+# Reload systemd and restart getty:
+sudo systemctl daemon-reload
+sudo systemctl restart getty@tty1
+
+That file ensures that getty logs you in automatically on tty1.
+
+Reboot to test
+
+====== ARCH LINUX AUTO LOGIN (ANOTHER WAY WHEN SDDM NOT INSTALLED) ======
+
+# Open a terminal and create a systemd service for auto-login:
+$ sudo nano /etc/systemd/system/auto-login@.service
+
+Paste the following content into the file:
+
+[Unit]
+Description=Automatic login for user %i
+After=systemd-user-sessions.service
+
+[Service]
+ExecStart=-/usr/bin/login -f %i
+StandardInput=tty
+TTYPath=/dev/tty1
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+Save and exit
+
+# Enable the auto-login service for your user (replace username with your actual username):
+$ sudo systemctl enable auto-login@andres.service
+
+Reboot to test
+
+====== DISABLE SYSMTED-BOOT MENU ======
+
+# Open the systemd-boot config file:
+$ sudo nano /boot/loader/loader.conf
+
+Add these lines:
+
+timeout 0
+console-mode max
+#console-mode keep
+
+"console-mode max" → Uses the smallest available font.
+If this doesn’t work, try "console-mode 1", "console-mode 2", etc.
+
+Save and exit
+
+====== COMPLETELY SUPRESS ALL BOOT MESSAGES ======
+
+Mofify kernel parameters
+
+# $ sudo nano /boot/loader/2025-02-04_22-02-41_linux.conf and add this line to "options":
+options root=PARTUUID=f693458b-c2be-46ce-bbe3-5d53f974ea73 quiet splash zswap.enabled=1 zswap.max_pool_percent=20 zswap.compressor=lz4 rw rootfstype=ext4 loglevel=0 systemd.show_status=false rd.udev.log_level=0 hdd_spinup_delay=0 vt.global_cursor_default=0 nowatchdog ipv6.disable=1 mitigations=off
+
+(Bonus):
+# Verify zswap is Active
+$ cat /sys/module/zswap/parameters/enabled
+
+====== HYPRLAND AUTO START ======
+
+# Edit ~/.zprofile
+$ sudo nano ~/.zprofile
+
+Add these lines:
+
+# Start Hyprland if it's not already started
+if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then
+    if uwsm check may-start; then
+        exec uwsm start hyprland.desktop >/dev/null 2>&1
+    else
+        exec Hyprland >/dev/null 2>&1
+    fi
+fi
+
+# Suppress the login message
+touch ~/.hushlogin
+
+Save and exit
+
+====== SETTING UP FONT CONFIGURATION ======
+
+Default Font Configuration
+
+You may need to configure font preferences in /etc/fonts/local.conf. Example configuration:
+
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+    <alias>
+        <family>sans-serif</family>
+        <prefer>
+            <family>Noto Sans</family>
+            <family>Noto Sans CJK</family>
+            <family>Noto Color Emoji</family>
+        </prefer>
+    </alias>
+    <alias>
+        <family>monospace</family>
+        <prefer>
+            <family>JetBrainsMono Nerd Font</family>
+            <family>Noto Sans Mono CJK</family>
+        </prefer>
+    </alias>
+</fontconfig>
+
+Save and exit
+
+# To apply the changes:
+$ fc-cache -fv
+
+# After installing, check if the correct fonts are being used:
+$ fc-match sans-serif
+$ fc-match monospace
+$ fc-match emoji
+
+# To list available fonts:
+$ fc-list | grep "Noto"
+
+====== DISABLE WATCHDOG SERVICES ======
+
+# Create or edit the system.conf file:
+$ sudo nano /etc/systemd/system.conf
+
+Change these values:
+
+[Manager]
+RuntimeWatchdogSec=0
+ShutdownWatchdogSec=0
+RebootWatchdogSec=0
+RuntimeWatchdogPreSec=0  # Optional, but ensures no pre-shutdown watchdog triggers
+
+# Reload the systemd configuration:
+$ sudo systemctl daemon-reexec
+
+# After rebooting, confirm that watchdog functionality is disabled:
+$ cat /proc/sys/kernel/watchdog
+
+Output should be 0.
+
+====== ENABLING PERFORMANCE MODE ======
+
+# Install cpupower:
+$ sudo pacman -S cpupower
+
+# Then enable and start the service:
+$ sudo systemctl enable --now cpupower.service
+
+# Then edit /etc/default/cpupower:
+$ sudo nano /etc/default/cpupower
+
+Change:
+governor='performance'
+
+# Save and reboot. Save and exit. Then reboot and check if it's applied with:
+$ cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+
+If it prints "performance", it's working.
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+CONFIGURING HYPRLAND:
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+Restore files from:
+
+/mnt/Backup/dotfiles_feb_27_2025/boot/loader.conf
+/mnt/Backup/dotfiles_feb_27_2025/boot/loader/entries/2025-02-26_17-12-56_linux.conf
+/mnt/Backup/dotfiles_feb_27_2025/browser/bookmarks.html
+/mnt/Backup/dotfiles_feb_27_2025/browser/passwords.csv
+/mnt/Backup/dotfiles_feb_27_2025/etc/fonts.conf
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.zprofile
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.zshrc
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.local/bin/*  (restore all content)
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/dunst/dunstrc
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/hypr/hyprland.conf
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/kitty/kitty.conf
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/kitty/theme.conf
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/kitty/userprefs.conf
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/Kvantum/*  (restores all catppuccin themes)
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/mpv/*  (restore all content)
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/nicotine/config
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/qt5ct/qt5ct.conf
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/qt6ct/qt6ct.conf
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/rofi/*  (restore all content)
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/VSCodium/User/argv.json
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/VSCodium/User/keybindings.json
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/VSCodium/User/settings.json
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/waybar/config.jsonc
+/mnt/Backup/dotfiles_feb_27_2025/home/andres/.config/waybar/style.css
+
+Revisit and make sure all settings in hyprland.conf are valid.
+Restore hyprland.conf settings to userprefs.conf
+Put as MUCH as configurations in userprefs.conf as possible so as to have only one file
+
+Tweak waybar and make sure all modues and scripts are executed and work
+Improve each and every script from /mnt/Backup/dotfiles_feb_27_2025/home/andres/.local/bin/* in their new HyDE location
+
+Use the default wlogout style, discard the HyDE wlogout style
+
+Customize hyprlock
+
+Test new hyprland animations from the HyDE animations folder
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+CONFIGURING APPLICATIONS:
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+====== ZEN BROWSER SETTINGS ======
+
+Login to Mozilla account and sync setting
+Restore Tab containers
+First create each container, then open websites on its approrpiate container
+
+For youtube:
+- Create youtube container
+- Open youtube in ytoubue container
+- Always open youtube in youtube container
+- Login to youtube
+- Pin youtube tab
+
+For Google:
+- Create Google container
+- Open Google
+- Always open Google in Google container
+- Login to Google
+- Open maps, drive, photos
+- Pin those tabs
+
+For all of containarized sites:
+Do the same and pin:
+- Google Maps
+- Google Drive
+- Google Photos
+- ChatGPT
+- GitHub
+- Twitter
+- WhatsApp
+- Traversy Media (My library)
+- LinkedIn
+
+Restore websit list from:
+/mnt/Backup/dotfiles_feb_27_2025/installation_help/firefox_allowed_domains.txt
+
+Perzonalize Zen browser
+- Configure settings
+- Instal Zen Mods
+- Change default fonts
+- Change default Download location to /mnt/Documents/PC_Downloads
+- Change default Homepage to www.duckduckdgo.com
+- Add Spanish dictionary for spell checking
+- Etc
+
+====== DOLPHIN SETTINGS ======
+
+Restore settings if UI looks messed up
+Use Konsele for Dolphin
+Configure Dolphin as much as I need it (folder icons, etc)
+
+====== VSCODIUM EXTENSIONS ======
+
+(In case GitHub profile login method fails)
+
+Bearded icons
+Beadered theme
+Catppuccin for VSCode
+Catppuccin Icons for VSCode
+ESLint
+GitHub Copilot
+GitHub Copilot chat
+GitHub Pull requests
+GitLens
+Markdonw All in one (or a better alternative)
+Material icon theme
+Material product icons
+Prettier
+Rosé predefined
+Tokyo night
+
+Find more useful extensions...
+More theme icons...
+
+Install "Settings Sync" Extension
+
+Follow these steps:
+https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync
+
+Retrieve settings and test if everything is restored from my GitHub Gist
+
+====== QBITTORRENT SETTINGS ======
+
+Change settigns:
+Usew Catppucin theme (or other theme) for qBittorrent 
+
+====== NICOTINE SETTINGS ======
+
+Copy settings from backup and enjoy
+
+====== AMULE SETTINGS ======
+
+Connect and select save location folders
+
+====== MPV SETTINGS ======
+
+Copy settings from backup and enjoy
+
+====== THUNDERDBIRD SETTINGS ======
+
+Login with andres.xma@gmail.com
+Login with andres.16602@gmail.com
+Login with andres@skyyym.com
+
+====== UFW SETTINGS ======
+
+Ask ChatGPT for help
+Deny all incomming and outgoing connections except selected ports
+
+====== KVANTUM SETTINGS ======
+
+Set Catppuccin macchiato mauve as theme
+(Ask ChatGPT if I need separate themes for Kvantum and GTK apps)
+
+====== EASYEFFECTS SETTINGS ======
+
+Install calf package and make sure it works.
+Load AndyEff.json from /mnt/Documents
+
+Verify if it works
+
+====== SPOTIFY SETTINGS ======
+
+Login with andres.16602@gmail.com
+Set audio quality to high
+
+====== KITTY SETTINGS ======
+
+Restore settings from /mnt/
+
+====== OBSIDIAN SETTINGS ======
+
+Restore settings from /mnt/Documents/Obsidian/Computer Science 101/
+Install Themes
+Install PDF plugin
+
+====== STEAM SETTINGS ======
+
+Login with:
+User: mookid_69
+Password: C@1pf>xjN23tG2FnDr.h
+
+Configure experimental settings
+Download all my library games
+
+For Doom + Doom II, set this lauch parameters:
+env -u SDL_VIDEODRIVER %command%
+
+Fix all games that won't launcher
+Ask ChatGPT and read ArchWiki for performance optimizations
+
+====== FILEZILLA SETTINGS ======
+
+Login to my servers
+
+====== BLUETOOTH SETTINGS ======
+
+Pair PS3 controllers to use them in STEAM
+
+====== VESKTOP SETTINGS ======
+
+Use for the first time and login with:
+andres@skyyym.com
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+POST INSTALLATION ARCH LINUX GUIDES:
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+POST ARCH LINUX INSTALLATION:
+
+Arch Linux General recommendations:
+https://wiki.archlinux.org/title/General_recommendations
+
+What do you use to manage dotfiles?
+https://news.ycombinator.com/item?id=11071754
+Tracking dotfiles directly with Git:
+https://wiki.archlinux.org/title/Dotfiles#Tracking_dotfiles_directly_with_Git
+
+My Zsh Themes:
+https://ohmyz.sh/
+https://github.com/ohmyzsh/ohmyzsh
+https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+
+Fonts:
+https://wiki.archlinux.org/title/Fonts
+
+Programming fonts:
+https://www.programmingfonts.org/
+https://www.lowing.org/fonts/
+https://www.slant.co/topics/67/~best-programming-fonts
+https://www.codingfont.com/
+
+---
+Customize linux bash:
+https://www.linuxbash.sh/
+
+Automating the entire Arch Linux installation process:
+https://disconnected.systems/
+
+Official Daytona blog offering weekly advices, announcements, news, developments and productivity tips for improving your coding skills:
+https://www.daytona.io/dotfiles
+
+Power management/Suspend and hibernate:
+https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate
+
+Category:Video:
+https://wiki.archlinux.org/title/Category:Video
+Category:Multimedia:
+https://wiki.archlinux.org/title/Category:Multimedia
+
+Fonts:
+https://wiki.archlinux.org/title/Fonts
